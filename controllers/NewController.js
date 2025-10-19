@@ -12,7 +12,7 @@ const getAllNews = async (req, res) => {
             include: [
                 { 
                     model: User, 
-                    as: 'author', // Definido en la asociación (si lo es) o solo 'User'
+                    as: 'usuario', // Definido en la asociación (si lo es) o solo 'User'
                     attributes: ['nombre', 'email'] // Solo queremos nombre y email del autor
                 },
                 { 
@@ -41,7 +41,7 @@ const getNewById = async (req, res) => {
         const noticia = await New.findByPk(id, {
             // Incluir las mismas relaciones
             include: [
-                { model: User, as: 'author', attributes: ['nombre', 'email'] },
+                { model: User, as: 'usuario', attributes: ['nombre', 'email'] },
                 { model: State, as: 'status', attributes: ['nombre'] },
                 { model: Category, as: 'category', attributes: ['nombre'] },
             ]

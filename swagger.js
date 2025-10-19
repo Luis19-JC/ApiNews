@@ -15,9 +15,19 @@ const options = {
                 url: 'http://localhost:3000/api',
             },
         ],
+        security: [{
+            bearerAuth: []
+        }],
         
         // Definición de Esquemas (Componentes)
         components: {
+            securitySchemes: {
+                bearerAuth: {
+                    type: 'http',
+                    scheme: 'bearer',
+                    bearerFormat: 'JWT'
+                }
+            },
             schemas: {
                 // ESQUEMA 1: PROFILE
                 Profile: {
@@ -80,9 +90,7 @@ const options = {
         }
     },
     // Archivos donde Swagger debe buscar la documentación.
-    apis: [
-        path.resolve(__dirname, 'routes/*.js')
-    ], 
+    apis: ['./routes/*.js'], 
 };
 
 // Genera la especificación OpenAPI

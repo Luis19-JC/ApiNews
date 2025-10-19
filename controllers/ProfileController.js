@@ -75,9 +75,6 @@ const updateProfile = async (req, res) => {
             return res.status(404).json({ message: 'Perfil no encontrado' });
         }
 
-        if (!nombre) {
-            return res.status(400).json({ message: 'El campo nombre es obligatorio para actualizar' });
-        }
         
         await profile.update({ nombre });
 

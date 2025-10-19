@@ -1,5 +1,6 @@
 const { User } = require('../models/UserModel')
 const { validationResult } = require('express-validator');
+const jwt = require('jsonwebtoken');
 
 const login = (request, response) => {
     const errors = validationResult(request);
@@ -14,10 +15,20 @@ const login = (request, response) => {
         },
     }).then(entitie => {
             if (entitie) {
-                response.status(201).json({message: "Login con éxito"});
+                const payload = {
+                    usuario: {
+                        id: entitie.id,
+                        correo: entitie.correo,
+                        perfil_id: entitie.perfil_id
+                    }
+                }
+                const token = jwt.sign(payload, 'mi_llave_secreta', {
+                    expiresIn: '1h'
+                });
+                response.status(200).json({ token: token });
             }
             else {
-                response.status(401).json({message: "Sin autorización"});
+                response.status(401).json({message: "Sin autorización: Credenciales incorrectas"});
 
             }
         })
